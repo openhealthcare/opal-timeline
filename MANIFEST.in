@@ -1,0 +1,2 @@
+recursive-include timeline/static *
+recursive-include timeline/templates *

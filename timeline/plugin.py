@@ -1,0 +1,33 @@
+"""
+Plugin definition for the timeline Opal plugin
+"""
+from opal.core import plugins
+
+from timeline.urls import urlpatterns
+
+class TimelinePlugin(plugins.OpalPlugin):
+    """
+    Main entrypoint to expose this plugin to our Opal application.
+    """
+    urls = urlpatterns
+    javascripts = {
+        # Add your javascripts here!
+        'opal.timeline': [
+            # 'js/timeline/app.js',
+            # 'js/timeline/controllers/larry.js',
+            # 'js/timeline/services/larry.js',
+        ]
+    }
+
+    def list_schemas(self):
+        """
+        Return any patient list schemas that our plugin may define.
+        """
+        return {}
+
+    def roles(self, user):
+        """
+        Given a (Django) USER object, return any extra roles defined
+        by our plugin.
+        """
+        return {}
