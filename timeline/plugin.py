@@ -18,6 +18,10 @@ class TimelinePlugin(plugins.OpalPlugin):
         ]
     }
 
+    stylesheets = [
+        "css/timeline.css"
+    ]
+
     def list_schemas(self):
         """
         Return any patient list schemas that our plugin may define.
