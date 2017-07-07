@@ -1,7 +1,8 @@
 directives.directive("timeline", function ($rootScope, recordLoader) {
   return {
     scope: {
-      metaInformation: "=timeline"
+      timelineData: "=timeline",
+      episode: "="
     },
     templateUrl: "/templates/timeline/timeline.html",
     link: function(scope, element, attr){
@@ -24,7 +25,7 @@ directives.directive("timeline", function ($rootScope, recordLoader) {
 
           scope.timelineAddVisible = false;
 
-          scope.metaInformation = _.map(scope.metaInformation, function(m){
+          scope.metaInformation = _.map(scope.timelineData, function(m){
               if(!m.icon){
                 m.icon = getIcon(m.columnName);
               }
