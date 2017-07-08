@@ -1,10 +1,8 @@
 import copy
-import json
 
 from django import template
 from timeline import timelines
 
-from opal.core.views import OpalSerializer
 
 register = template.Library()
 
@@ -14,9 +12,5 @@ register = template.Library()
 )
 def timeline(context, timeline_slug):
     ctx = copy.copy(context)
-    ctx["timeline"] = json.dumps(
-        timelines.Timeline.get(timeline_slug)().to_dict(),
-        cls=OpalSerializer
-    )
-
+    ctx["timeline"] = timelines.Timeline.get(timeline_slug)()
     return ctx

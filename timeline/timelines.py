@@ -1,8 +1,41 @@
 from opal.core import discoverable
+from opal.core.views import OpalSerializer
+import json
 
 
 class TimelineElement(object):
-    pass
+    aggregate_template = "partials/timeline/aggregate_template.html"
+
+    def __init__(
+        self,
+        subrecord,
+        when,
+        addable=True,
+        priority=None,
+        aggregate_template=None
+    ):
+        self.subrecord = subrecord
+        self.when = when
+        self.priority = priority
+        self.addable = addable
+        if aggregate_template:
+            self.aggregate_template = aggregate_template
+        self.template = subrecord.get_display_template()
+
+    def add_priority_if_not_set(self, priority):
+        if not self.priority:
+            priority = priority
+
+    def to_dict(self):
+        return dict(
+            columnName=self.subrecord.get_api_name(),
+            when=self.when,
+            addable=self.addable,
+            priority=self.priority,
+            aggregate_template=self.aggregate_template,
+            template=self.template,
+            display_name=self.subrecord.get_display_name()
+        )
 
 
 class Timeline(discoverable.DiscoverableFeature):
@@ -12,18 +45,19 @@ class Timeline(discoverable.DiscoverableFeature):
 
     def to_dict(self):
         # for index, element in enumerate(elements):
-        return [dict(
-            columnName="microbiology_input",
-            when='when',
-            addable=True,
-            priority=5
-        )]
+        for index, element in enumerate(self.elements):
+            element.add_priority_if_not_set(index)
 
+        return [i.to_dict() for i in self.elements]
 
-class SampleTimeline(Timeline):
-    display_name = "Sample Timeline"
-    slug = "sample"
+    def as_json(self):
+        return json.dumps(
+            self.to_dict(),
+            cls=OpalSerializer
+        )
 
-# so what do we have...
-# we need a to_dict method that outputs to the the front end, the question is
-# how much can we actually declare a model to the front end..
+    def get_templates(self):
+        return {i.template for i in self.elements}
+
+    def get_aggregate_templates(self):
+        return {i.aggregate_template for i in self.elements}

@@ -1,0 +1,61 @@
+{% load forms %}
+<div timeline="{{ timeline.as_json }}" episode="episode">
+  Now ([[ today | momentDateFormat: 'DD MMM' ]])
+  {% comment %}
+  <div class="panel panel-default patient-timeline">
+    <div class="panel-heading">
+      <center>
+        <button class="btn btn-lg btn-primary" ng-click="timelineAddVisible = !timelineAddVisible">
+          {% icon "glyphicon-plus" %} Add entry
+        </button>
+      </center>
+      <div ng-show="timelineAddVisible">
+        <div class="row">
+          <div ng-repeat="information in metaInformationDisplay"
+               ng-click="episode.recordEditor.newItem(information.columnName)"
+               >
+            <div class="col-md-4 content-offset-20">
+              <center>
+                <button class="btn btn-primary col-md-12">
+                  <i class="[[ information.icon ]]"></i> [[ information.display_name ]]
+                </button>
+              </center>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="patient-timeline-now">
+            <div class="timeline-now bg-secondary">
+              Now ([[ today | momentDateFormat: 'DD MMM' ]])
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-repeat="date in dates" class="row content-offset-20">
+        <div class="col-md-12">
+          <div class="timeline-date">[[ date | momentDateFormat:'DD MMM' ]] [[ date | momentDateFormat:'YYYY' ]]</div>
+        </div>
+        <div class="col-md-12">
+          <div ng-repeat="metaInfo in metaInformation" ng-show="getSubrecordFromDateAndMetaInfo(date, metaInfo).length" class="row content-offset-below-10">
+            <div class="col-md-1 col-md-offset-1">
+              <div class="timeline-icon">
+                <i class="[[ metaInfo.icon ]]"></i>
+              </div>
+            </div>
+            {% for aggregate_template in timeline.get_aggregate_templates %}
+              <div ng-show="metaInfo.aggregateTemplate === '{{ aggregate_template }}'">
+                {% include aggregate_template %}
+              </div>
+            {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endcomment %}
+</div>
