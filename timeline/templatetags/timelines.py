@@ -8,7 +8,7 @@ register = template.Library()
 
 
 @register.inclusion_tag(
-    'templatetags/timeline/timeline_wrapper.html', takes_context=True
+    'templatetags/timeline/timeline.html', takes_context=True
 )
 def timeline(context, timeline_slug):
     ctx = copy.copy(context)

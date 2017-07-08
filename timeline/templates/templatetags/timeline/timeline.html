@@ -1,7 +1,5 @@
 {% load forms %}
 <div timeline="{{ timeline.as_json }}" episode="episode">
-  Now ([[ today | momentDateFormat: 'DD MMM' ]])
-  {% comment %}
   <div class="panel panel-default patient-timeline">
     <div class="panel-heading">
       <center>
@@ -11,17 +9,19 @@
       </center>
       <div ng-show="timelineAddVisible">
         <div class="row">
-          <div ng-repeat="information in metaInformationDisplay"
-               ng-click="episode.recordEditor.newItem(information.columnName)"
-               >
-            <div class="col-md-4 content-offset-20">
-              <center>
-                <button class="btn btn-primary col-md-12">
-                  <i class="[[ information.icon ]]"></i> [[ information.display_name ]]
-                </button>
-              </center>
-            </div>
+
+        <div ng-repeat="information in metaInformationDisplay"
+             ng-click="episode.recordEditor.newItem(information.columnName)"
+             >
+          <div class="col-md-4 content-offset-20">
+            <center>
+              <button class="btn btn-primary col-md-12">
+                <i class="[[ information.icon ]]"></i> [[ information.display_name ]]
+              </button>
+            </center>
           </div>
+        </div>
+
         </div>
       </div>
     </div>
@@ -46,16 +46,11 @@
                 <i class="[[ metaInfo.icon ]]"></i>
               </div>
             </div>
-            {% for aggregate_template in timeline.get_aggregate_templates %}
-              <div ng-show="metaInfo.aggregateTemplate === '{{ aggregate_template }}'">
-                {% include aggregate_template %}
-              </div>
-            {% endfor %}
+            <div ng-include src="metaInfo.aggregateTemplateUrl" class="timeline-record col-md-8">
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  {% endcomment %}
 </div>

@@ -1,13 +1,11 @@
-directives.directive("timeline", function ($rootScope, recordLoader) {
+directives.directive("timeline", function ($rootScope, recordLoader, $parse) {
   return {
-    scope: {
-      timelineData: "=timeline",
-      episode: "="
-    },
-    templateUrl: "/templates/timeline/timeline.html",
-    link: function(scope, element, attr){
+    scope: false,
+    link: function(scope, element, attrs){
         "use strict";
 
+        scope.timelineData = $parse(attrs.timeline)(scope);
+        scope.episode = $parse(attrs.episode)(scope);
         recordLoader.load().then(function(schema){
           var getTemplateUrl = function(columnName){
               return "/templates/record/" + columnName + '.html';
