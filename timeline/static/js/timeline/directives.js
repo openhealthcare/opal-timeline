@@ -41,10 +41,6 @@ directives.directive("timeline", function ($rootScope, recordLoader, $parse) {
                 m.index = 5;
               }
 
-              if(!m.aggregateTemplateUrl){
-                m.aggregateTemplateUrl = "/templates/timeline/aggregate_template.html";
-              }
-
               return m;
           });
 

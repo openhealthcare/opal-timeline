@@ -34,7 +34,7 @@ class TimelineElement(object):
             priority=self.priority,
             aggregate_template=self.aggregate_template,
             template=self.template,
-            display_name=self.subrecord.get_display_name()
+            display_name=self.subrecord.get_display_name(),
         )
 
 
