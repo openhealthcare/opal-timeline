@@ -15,7 +15,11 @@ class TimelinePlugin(plugins.OpalPlugin):
         # Add your javascripts here!
         'opal.controllers': [
             'js/timeline/directives.js',
+        ],
+        'opal.services': [
+            'js/timeline/services/timeline_aggregator.js',
         ]
+
     }
 
     stylesheets = [

@@ -24,17 +24,18 @@ class TimelineElement(object):
 
     def add_priority_if_not_set(self, priority):
         if not self.priority:
-            priority = priority
+            self.priority = priority
 
     def to_dict(self):
         return dict(
-            columnName=self.subrecord.get_api_name(),
+            column_name=self.subrecord.get_api_name(),
             when=self.when,
             addable=self.addable,
             priority=self.priority,
             aggregate_template=self.aggregate_template,
             template=self.template,
             display_name=self.subrecord.get_display_name(),
+            icon=getattr(self.subrecord, "_icon", None)
         )
 
 
@@ -48,7 +49,9 @@ class Timeline(discoverable.DiscoverableFeature):
         for index, element in enumerate(self.elements):
             element.add_priority_if_not_set(index)
 
-        return [i.to_dict() for i in self.elements]
+        return sorted(
+            [i.to_dict() for i in self.elements], lambda x: i.priority
+        )
 
     def as_json(self):
         return json.dumps(

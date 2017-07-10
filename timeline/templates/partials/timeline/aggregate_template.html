@@ -1,6 +1,6 @@
 <div ng-repeat="item in getSubrecordFromDateAndMetaInfo(date, metaInfo)">
   <span ng-show="$first"><b>[[ metaInfo.display_name ]]:</b><br /></span>
-  <a class="pointer" ng-click="editItem(item)" ng-include src="metaInfo.templateUrl">
+  <a class="pointer" ng-click="editItem(item)">
     {% for template in timeline.get_templates %}
       <div ng-show="metaInfo.template === '{{ template }}'">
         {% include template %}
