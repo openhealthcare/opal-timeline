@@ -1,10 +1,12 @@
-<div ng-repeat="item in getSubrecordFromDateAndMetaInfo(date, metaInfo)">
-  <span ng-show="$first"><b>[[ metaInfo.display_name ]]:</b><br /></span>
-  <a class="pointer" ng-click="editItem(item)">
-    {% for template in timeline.get_templates %}
-      <div ng-show="metaInfo.template === '{{ template }}'">
-        {% include template %}
-      </div>
-    {% endfor %}
-  </a>
+<div ng-repeat="timelineElement in timeline.getElementsForElementDefinition(timeline.indexedTimeLineElements[date], elementDefinition)">
+  <div ng-repeat="item in [timelineElement.subrecord]">
+    <span ng-show="$first"><b>[[ elementDefinition.display_name ]]:</b><br /></span>
+    <a class="pointer" ng-click="editItem(item)">
+      {% for template in timeline.get_templates %}
+        <div ng-show="elementDefinition.template === '{{ template }}'">
+          {% include template %}
+        </div>
+      {% endfor %}
+    </a>
+  </div>
 </div>

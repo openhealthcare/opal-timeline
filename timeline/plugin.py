@@ -17,7 +17,7 @@ class TimelinePlugin(plugins.OpalPlugin):
             'js/timeline/directives.js',
         ],
         'opal.services': [
-            'js/timeline/services/timeline_aggregator.js',
+            'js/timeline/services/timeline.js',
         ]
 
     }

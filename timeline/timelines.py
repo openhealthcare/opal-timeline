@@ -5,31 +5,30 @@ import json
 
 class TimelineElement(object):
     aggregate_template = "partials/timeline/aggregate_template.html"
+    priority = 5
 
     def __init__(
         self,
         subrecord,
-        when,
+        group_by,
         addable=True,
         priority=None,
         aggregate_template=None
     ):
         self.subrecord = subrecord
-        self.when = when
-        self.priority = priority
+        self.group_by = group_by
+
+        if priority:
+            self.priority = priority
         self.addable = addable
         if aggregate_template:
             self.aggregate_template = aggregate_template
         self.template = subrecord.get_display_template()
 
-    def add_priority_if_not_set(self, priority):
-        if not self.priority:
-            self.priority = priority
-
     def to_dict(self):
         return dict(
             column_name=self.subrecord.get_api_name(),
-            when=self.when,
+            group_by=self.group_by,
             addable=self.addable,
             priority=self.priority,
             aggregate_template=self.aggregate_template,
@@ -45,12 +44,8 @@ class Timeline(discoverable.DiscoverableFeature):
     elements = ()
 
     def to_dict(self):
-        # for index, element in enumerate(elements):
-        for index, element in enumerate(self.elements):
-            element.add_priority_if_not_set(index)
-
         return sorted(
-            [i.to_dict() for i in self.elements], lambda x: i.priority
+            [i.to_dict() for i in self.elements], key=lambda x: -x["priority"]
         )
 
     def as_json(self):
