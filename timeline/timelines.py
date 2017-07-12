@@ -4,37 +4,38 @@ import json
 
 
 class TimelineElement(object):
-    aggregate_template = "partials/timeline/aggregate_template.html"
-    priority = 5
-
     def __init__(
         self,
         subrecord,
         group_by,
         addable=True,
-        priority=None,
-        aggregate_template=None
+        priority=5,
+        template=None,
+        aggregate_template="partials/timeline/aggregate_template.html"
     ):
+        self.api_name = subrecord.get_api_name()
+        self.display_name = subrecord.get_display_name()
         self.subrecord = subrecord
         self.group_by = group_by
-
-        if priority:
-            self.priority = priority
+        self.priority = priority
         self.addable = addable
-        if aggregate_template:
-            self.aggregate_template = aggregate_template
-        self.template = subrecord.get_display_template()
+        self.aggregate_template = aggregate_template
+        if template:
+            self.template = template
+        else:
+            self.template = subrecord.get_display_template()
+        self.icon = getattr(self.subrecord, "_icon", None)
 
     def to_dict(self):
         return dict(
-            column_name=self.subrecord.get_api_name(),
+            api_name=self.api_name,
             group_by=self.group_by,
             addable=self.addable,
             priority=self.priority,
             aggregate_template=self.aggregate_template,
             template=self.template,
-            display_name=self.subrecord.get_display_name(),
-            icon=getattr(self.subrecord, "_icon", None)
+            display_name=self.display_name,
+            icon=self.icon
         )
 
 

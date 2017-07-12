@@ -32,6 +32,7 @@ settings.configure(DEBUG=True,
                                    'django.contrib.admin',
                                    'compressor',
                                    'opal',
+                                   'opal.tests',
                                    'timeline',))
 
 import django

@@ -31,9 +31,9 @@ directives.directive("timeline", function ($rootScope, $parse, Timeline, recordL
           };
         })
 
-        var column_names = _.unique(_.pluck(timelineDefinition, "column_name"));
+        var api_names = _.unique(_.pluck(timelineDefinition, "api_name"));
 
-        _.each(column_names, function(column_name){
+        _.each(api_names, function(api_name){
             // watching episode subrecords
             // creates a circular referene
             // as they have a pointer to episode

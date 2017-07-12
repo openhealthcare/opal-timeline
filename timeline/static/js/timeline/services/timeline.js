@@ -32,9 +32,9 @@ angular.module('opal.services').service('Timeline', function(){
 
   Timeline.prototype = {
     getReleventSubrecords: function(){
-        var column_names = this.getColumnNames()
+        var api_names = this.getColumnNames()
         return _.reduce(_.keys(this.episode), function(memo, k){
-            if(_.contains(column_names, k)){
+            if(_.contains(api_names, k)){
               memo = memo.concat(this.episode[k]);
             }
 
@@ -43,12 +43,12 @@ angular.module('opal.services').service('Timeline', function(){
     },
     getMetaDataForSubrecord: function(item){
         return _.filter(this.timelineDefinition, function(x){
-            return x.column_name === item.columnName;
+            return x.api_name === item.columnName;
         });
     },
     getElementsForElementDefinition: function(someElements, elementDefintion){
       return _.filter(someElements, function(x){
-        return x.column_name === elementDefintion.column_name
+        return x.api_name === elementDefintion.api_name
       });
     },
     constructTimelineElements: function(subrecords){
@@ -73,8 +73,8 @@ angular.module('opal.services').service('Timeline', function(){
         return te1 < te2
       }
 
-      if(te1.column_name !== te2.column_name){
-        return te1.column_name < te2.column_name;
+      if(te1.api_name !== te2.api_name){
+        return te1.api_name < te2.api_name;
       }
 
       return te1.group_by < te2.group_by;
@@ -93,11 +93,10 @@ angular.module('opal.services').service('Timeline', function(){
       _.each(newMetaDataInformation, function(v){
          v.sort(this.sortOrder);
       }, this);
-
       return newMetaDataInformation;
     },
     getColumnNames: function(){
-      return _.unique(_.pluck(this.timelineDefinition, "column_name"));
+      return _.unique(_.pluck(this.timelineDefinition, "api_name"));
     },
     getDates: function(){
       var allDates = _.reduce(this.indexedTimeLineElements, function(memo, v, k){
