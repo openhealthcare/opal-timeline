@@ -1,0 +1,59 @@
+{% load forms %}
+<div timeline="{{ timeline.as_json }}" episode="episode">
+  <div class="panel panel-default opal-timeline">
+    <div class="panel-heading">
+      <center>
+        <button class="btn btn-lg btn-primary" ng-click="timelineAddVisible = !timelineAddVisible">
+          {% icon "glyphicon-plus" %} Add entry
+        </button>
+      </center>
+      <div ng-show="timelineAddVisible">
+        <div class="row">
+
+        <div ng-repeat="elementDefinition in timeline.timelineDefinition"
+             ng-click="episode.recordEditor.newItem(elementDefinition.api_name)"
+             >
+          <div class="col-sm-4 content-offset-20">
+            <center>
+              <button class="btn btn-primary col-sm-12">
+                <i class="[[ elementDefinition.icon ]]"></i> [[ elementDefinition.display_name ]]
+              </button>
+            </center>
+          </div>
+        </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="patient-timeline-now">
+            <div class="timeline-now bg-secondary">
+              Now ([[ today | momentDateFormat: 'DD MMM' ]])
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-repeat="date in dates" class="row content-offset-20">
+        <div class="col-sm-12">
+          <div class="timeline-date">[[ date | momentDateFormat:'DD MMM' ]] [[ date | momentDateFormat:'YYYY' ]]</div>
+        </div>
+        <div class="col-sm-12">
+          <div ng-repeat="elementDefinition in timeline.timelineDefinition" ng-show="timeline.getElementsForElementDefinition(timeline.indexedTimeLineElements[date], elementDefinition).length" class="row content-offset-below-10">
+            <div class="col-sm-1 col-sm-offset-1">
+              <div class="timeline-icon">
+                <i class="[[ elementDefinition.icon ]]"></i>
+              </div>
+            </div>
+            {% for aggregate_template in timeline.get_aggregate_templates %}
+              <div class="col-sm-8" ng-show="elementDefinition.aggregate_template === '{{ aggregate_template }}'">
+                {% include aggregate_template %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

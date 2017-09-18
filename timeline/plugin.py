@@ -5,6 +5,7 @@ from opal.core import plugins
 
 from timeline.urls import urlpatterns
 
+
 class TimelinePlugin(plugins.OpalPlugin):
     """
     Main entrypoint to expose this plugin to our Opal application.
@@ -12,12 +13,18 @@ class TimelinePlugin(plugins.OpalPlugin):
     urls = urlpatterns
     javascripts = {
         # Add your javascripts here!
-        'opal.timeline': [
-            # 'js/timeline/app.js',
-            # 'js/timeline/controllers/larry.js',
-            # 'js/timeline/services/larry.js',
+        'opal.controllers': [
+            'js/timeline/directives.js',
+        ],
+        'opal.services': [
+            'js/timeline/services/timeline.js',
         ]
+
     }
+
+    stylesheets = [
+        "css/timeline.css"
+    ]
 
     def list_schemas(self):
         """
