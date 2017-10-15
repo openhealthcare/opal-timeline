@@ -11,7 +11,7 @@ class SampleTimeline(Timeline):
     slug = "sample"
 
     elements = (
-        TimelineElement(subrecord=MicrobiologyInput, when="when"),
+        TimelineElement(subrecord=MicrobiologyInput, group_by="when"),
     )
 ```
 
