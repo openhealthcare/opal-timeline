@@ -10,7 +10,7 @@
       <div ng-show="timelineAddVisible">
         <div class="row">
 
-        <div ng-repeat="elementDefinition in timeline.timelineDefinition"
+        <div ng-repeat="elementDefinition in timeline.elements"
              ng-click="episode.recordEditor.newItem(elementDefinition.api_name)"
              >
           <div class="col-sm-4 content-offset-20">
@@ -40,7 +40,7 @@
           <div class="timeline-date">[[ date | momentDateFormat:'DD MMM' ]] [[ date | momentDateFormat:'YYYY' ]]</div>
         </div>
         <div class="col-sm-12">
-          <div ng-repeat="elementDefinition in timeline.timelineDefinition" ng-show="timeline.getElementsForElementDefinition(timeline.indexedTimeLineElements[date], elementDefinition).length" class="row content-offset-below-10">
+          <div ng-repeat="elementDefinition in timeline.elements" ng-show="timeline.getElementsForElementDefinition(timeline.indexedTimeLineElements[date], elementDefinition).length" class="row content-offset-below-10">
             <div class="col-sm-1 col-sm-offset-1">
               <div class="timeline-icon">
                 <i class="[[ elementDefinition.icon ]]"></i>

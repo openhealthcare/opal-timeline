@@ -3,14 +3,11 @@ Plugin definition for the timeline Opal plugin
 """
 from opal.core import plugins
 
-from timeline.urls import urlpatterns
-
 
 class TimelinePlugin(plugins.OpalPlugin):
     """
     Main entrypoint to expose this plugin to our Opal application.
     """
-    urls = urlpatterns
     javascripts = {
         # Add your javascripts here!
         'opal.controllers': [

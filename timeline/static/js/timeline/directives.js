@@ -7,7 +7,7 @@ directives.directive("timeline", function ($rootScope, $parse, Timeline, recordL
         var timelineDefinition = $parse(attrs.timeline)(scope);
         scope.episode = $parse(attrs.episode)(scope);
         scope.today = new Date();
-        scope.timelineAddVisible = false;
+        scope.timelineAddVisible = timelineDefinition.add_visible;
 
         var constructTimeline = function(){
           // gets an array of all the relevent subrecords

@@ -43,11 +43,16 @@ class Timeline(discoverable.DiscoverableFeature):
     module_name = "timelines"
     # at the moment we assume this is just a model
     elements = ()
+    add_visible = False
 
     def to_dict(self):
-        return sorted(
-            [i.to_dict() for i in self.elements], key=lambda x: -x["priority"]
-        )
+        return {
+            'add_visible': self.add_visible,
+            'elements'   : sorted(
+                [i.to_dict() for i in self.elements],
+                key=lambda x: -x["priority"]
+            )
+        }
 
     def as_json(self):
         return json.dumps(

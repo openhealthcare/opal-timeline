@@ -17,6 +17,7 @@ angular.module('opal.services').service('Timeline', function(){
 
   var Timeline = function(timelineDefinition, episode){
     this.timelineDefinition = timelineDefinition;
+    this.elements = timelineDefinition.elements;
     this.episode = episode;
 
     // gets an array of all the relevent subrecords
@@ -42,7 +43,7 @@ angular.module('opal.services').service('Timeline', function(){
         }, [], this);
     },
     getMetaDataForSubrecord: function(item){
-        return _.filter(this.timelineDefinition, function(x){
+        return _.filter(this.elements, function(x){
             return x.api_name === item.columnName;
         });
     },
@@ -96,7 +97,7 @@ angular.module('opal.services').service('Timeline', function(){
       return newMetaDataInformation;
     },
     getColumnNames: function(){
-      return _.unique(_.pluck(this.timelineDefinition, "api_name"));
+      return _.unique(_.pluck(this.elements, "api_name"));
     },
     getDates: function(){
       var allDates = _.reduce(this.indexedTimeLineElements, function(memo, v, k){
